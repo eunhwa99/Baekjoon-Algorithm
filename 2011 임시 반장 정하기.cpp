@@ -37,8 +37,9 @@ int main() {
 		}
 	}
 	printf("%d\n", max_i);
+}
 
-/* 시간 최적화 코드
+/*
 * #include <stdio.h>
 
 int main()
@@ -74,7 +75,5 @@ int main()
 		}
 	}
 	printf("%d\n", result+1);
-}
-	/
 }
 */
