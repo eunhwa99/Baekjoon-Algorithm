@@ -2,7 +2,7 @@
 using namespace std;
 //dy={0,1,0,-1}
 //dx={1,0,-1,0}
-//dir={¿À,¾Æ,¿Ş,À§}
+//dir={Â¿Ã€,Â¾Ã†,Â¿Ã,Ã€Â§}
 
 class robot {
 	int y;
@@ -33,9 +33,9 @@ public:
 		this->dir += 1;
 		this->dir %= 4;
 	}
-	int move(int a, int b) { // °¡·Î ¼¼·Î
+	int move(int a, int b) { // Â°Â¡Â·Ã Â¼Â¼Â·Ã
 		int curdir = this->dir;
-		if (curdir == 0) { //¿À
+		if (curdir == 0) { //Â¿Ã€
 			this->x += 1;
 			if (this->x >= a) return -1;
 		}
