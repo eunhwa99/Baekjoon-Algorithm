@@ -3,6 +3,8 @@ int N, M;
 int map[101][101];
 int total, sum1, sum2;
 long long maxV, mux;
+// dp[i][j]=dp[i-1][j]+dp[i][j-1]-dp[i-1][j-1]+map[i][j] 
+//dp[i][j]: i행 j열에 속하는 사각형안의 모든 수의 합
 /*
 * #include <cstdio>
 #include <algorithm>
