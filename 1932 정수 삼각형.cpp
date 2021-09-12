@@ -18,6 +18,7 @@ void allocate() {
 	for (int i = 0; i < (1 << N); i++)
 	{
 		visit[i] = (int*)malloc(sizeof(int) * N);
+		//memset(visit, -1, sizeof(int)*N);
 		for (int j = 0; j < N; j++)
 			visit[i][j] = -1;
 	}
