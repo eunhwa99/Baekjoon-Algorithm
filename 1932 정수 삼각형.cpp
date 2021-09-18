@@ -1,78 +1,46 @@
 #include<stdio.h>
-#include<string.h>
 #include<stdlib.h>
-#define INF 987654321
-int N;
+int n;
 int** arr;
-int** visit;
-
-void allocate() {
-	arr = (int**)malloc(sizeof(int*) * N);
-	visit = (int**)malloc(sizeof(int*) * (1 << N));
-	
-	for (int i = 0; i < N; i++)
-	{
-		arr[i] = (int*)malloc(sizeof(int) * N);
-	}
-
-	for (int i = 0; i < (1 << N); i++)
-	{
-		visit[i] = (int*)malloc(sizeof(int) * N);
-		//memset(visit, -1, sizeof(int)*N);
-		for (int j = 0; j < N; j++)
-			visit[i][j] = -1;
-	}
-	
+int** cache;
+int getMax(int a, int b) {
+	return a > b ? a : b;
 }
+int getSum(int y, int x) {
+	//ê¸°ì €ì‚¬ë¡€
+	if (y >= n || x > y) return 0;
 
-void input() {
-	for (int i = 0; i < N; i++)
-		for (int j = 0; j < N; j++)
-			scanf("%d", &arr[i][j]);
-}
-
-int min(int a, int b) {
-	return a < b ? a : b;
-}
-
-int traverse(int city, int vs) {
-	
-	if (vs == (1 << N) - 1) {
-		if (arr[city][0] > 0) return arr[city][0];
-		return INF;
-	}
-	int& ret = visit[vs][city];
-
+	int& ret = cache[y][x];
 	if (ret != -1) return ret;
-	ret = INF;
 
-	int curvs = vs;
-	for (int i = 0; i < N; i++) {
-
-		if (curvs & (1 << i) || arr[city][i] == 0) continue; //ÀÌ¹Ì ¹æ¹®ÇÑ µµ½Ã or °æ·Î°¡ ¾øÀ¸¸é
-		
-			ret = min(traverse(i, vs | (1 << i)) + arr[city][i], ret);
-
-		
-	}
-	return ret;
+	return ret = getMax(getSum(y + 1, x), getSum(y + 1, x + 1)) + arr[y][x];
 }
 
 int main() {
-	scanf("%d", &N);
-	
-	allocate();
+	scanf("%d", &n);
 
-	input();
-	printf("%d\n",traverse(0, 1));
+	arr = (int**)malloc(sizeof(int*) * n);
+	cache = (int**)malloc(sizeof(int*) * n);
 
-	for (int i = 0; i < N; i++)
+	for (int i = 0; i < n; i++) {
+		arr[i] = (int*)malloc(sizeof(int) * (i + 1));
+		cache[i] = (int*)malloc(sizeof(int) * (i + 1));
+
+		for (int j = 0; j < i + 1; j++) {
+			scanf("%d", &arr[i][j]);
+			cache[i][j] = -1; // ì´ˆê¸°í™”
+		}
+	}
+
+	printf("%d\n", getSum(0, 0));
+
+	for (int i = 0; i < n; i++) {
 		free(arr[i]);
-
-	for (int i = 0; i < (1 << N); i++)
-		free(visit[i]);
+		free(cache[i]);
+	}
 	free(arr);
-	free(visit);
+	free(cache);
+
 }
 /*
 * #include<stdio.h>
@@ -100,12 +68,12 @@ int main() {
 		for (int j = 0; j <= i; j++) {
 			scanf("%d", &tmp);
 
-			if (j == 0) cache[j] = tmp + arr[0]; //¹Ù·Î À§¿¡²¨ ´õÇÏ±â
-			else if (j == i) cache[j] = tmp + arr[j-1]; // °¡Àå ¿À¸¥ÂÊ ¼ººÐÀÏ ¶§: ¿ÞÂÊÀ§ ´ë°¢¼±ÇÏ°í¸¸ ´õÇÒ ¼ö ÀÖ´Ù.
+			if (j == 0) cache[j] = tmp + arr[0]; //ë°”ë¡œ ìœ„ì—êº¼ ë”í•˜ê¸°
+			else if (j == i) cache[j] = tmp + arr[j-1]; // ê°€ìž¥ ì˜¤ë¥¸ìª½ ì„±ë¶„ì¼ ë•Œ: ì™¼ìª½ìœ„ ëŒ€ê°ì„ í•˜ê³ ë§Œ ë”í•  ìˆ˜ ìžˆë‹¤.
 			else cache[j] = tmp + getMax(arr[j], arr[j - 1]);
 		}
 		for (int j = 0; j <= i; j++)
-			arr[j] = cache[j]; //arr »ï°¢Çü ¹Ù·Î ¾÷µ¥ÀÌÆ®
+			arr[j] = cache[j]; //arr ì‚¼ê°í˜• ë°”ë¡œ ì—…ë°ì´íŠ¸
 	}
 	
 	tmp = arr[0];
