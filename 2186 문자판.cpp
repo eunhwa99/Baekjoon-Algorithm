@@ -12,7 +12,7 @@ int abs(int a, int b) {
 }
 
 int getCount(int y, int x, int num) {
-	if (flag) return 0;
+	if (flag) return 0; //flag 변수 안넣으면 시간초과
 	if (num == len) return 1;
 
 	int& ret = dp[y][x][num];
@@ -22,8 +22,9 @@ int getCount(int y, int x, int num) {
 	int next = str[num]-'A';
 	if (cnt[next] == 0) flag = 1;
 
-	for (int i = 0; i < cnt[next]; i++) {
-		int ny = arr[next][i] / M;
+	for (int i = 0; i < cnt[next]; i++) { //여기서 최대 10000개를 탐색하므로 flag 변수 넣기
+		//flag 안 사용하려면 현재 정점에서 K이하 만큼 이동시켜서 탐색
+		int ny = arr[next][i] / M; 
 		int nx = arr[next][i] % M;
 
 		if ((ny != y && nx != x) || (ny == y && nx == x)) continue; // 대각선
