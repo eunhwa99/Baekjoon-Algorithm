@@ -12,7 +12,7 @@ int abs(int a, int b) {
 }
 
 int getCount(int y, int x, int num) {
-	if (flag) return 0; //flag 변수 안넣으면 시간초과
+	if (flag) return 0; //flag variable X --> time out
 	if (num == len) return 1;
 
 	int& ret = dp[y][x][num];
@@ -22,8 +22,8 @@ int getCount(int y, int x, int num) {
 	int next = str[num]-'A';
 	if (cnt[next] == 0) flag = 1;
 
-	for (int i = 0; i < cnt[next]; i++) { //여기서 최대 10000개를 탐색하므로 flag 변수 넣기
-		//flag 안 사용하려면 현재 정점에서 K이하 만큼 이동시켜서 탐색
+	for (int i = 0; i < cnt[next]; i++) { //MAX 10000 search --> need flag 
+		//if don't want to use flag --> search from current node (within K distance)
 		int ny = arr[next][i] / M; 
 		int nx = arr[next][i] % M;
 
