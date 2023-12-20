@@ -1,7 +1,7 @@
 #include<stdio.h>
 #define Max 400002
 
-char string[Max], string2[Max>>1];
+char string[Max];
 int N;
 
 int suffixArr[Max],
@@ -67,18 +67,6 @@ void getLCP() {
 
 }
 
-void strCat(char* dest, const char* src) {
-	char* org = dest;
-
-	while (*dest != '\0') ++dest;
-
-	while (*src != '\0') {
-		*dest = *src;
-		++dest;
-		++src;
-	}
-	*dest = '\0'; // 문자열 마지막에 delimiter 추가!!
-}
 
 int main() {
 	scanf("%s", string);
@@ -92,7 +80,7 @@ int main() {
 
 	int m = N;
 	
-	scanf("%s", string + m + 1);
+	scanf("%s", string + m + 1); 
 
 	for (N; string[N]; N++) {
 		suffixArr[N] = N,
@@ -103,10 +91,15 @@ int main() {
 	getLCP();
 
 	int ans[2] = { 0,0 };
+	/*
+	(suffixArr[i] < m): Checks if the element at index i in the suffixArr array is less than m.
+	(suffixArr[i - 1] < m): Checks if the element at the previous index (i - 1) in the suffixArr array is less than m.
+	The XOR (^) operator ensures that only one of these conditions is true.
+	*/
 	for (int i = 2; i < N; i++) {
 		if ((suffixArr[i] < m) ^ (suffixArr[i - 1] < m) && ans[0] < lcp[i])ans[0] = lcp[i], ans[1] = suffixArr[i];
 	}
 	printf("%d\n", ans[0]);
-	for (int i = ans[1]; i < ans[1] + ans[0]; ++i)printf("%c", string[i]);
+	for (int i = ans[1]; i < ans[1] + ans[0]; ++i) printf("%c", string[i]);
 	return 0;
 }
