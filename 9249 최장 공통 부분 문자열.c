@@ -1,5 +1,5 @@
 #include<stdio.h>
-#define Max 400002
+#define Max 200002
 
 char string[Max];
 int N;
@@ -63,8 +63,6 @@ void getLCP() {
 
 	}
 
-	
-
 }
 
 
@@ -73,14 +71,14 @@ int main() {
 	
 	for (N = 0; string[N]; N++)
 		suffixArr[N] = N,
-		ord[N] = string[N] - 'a' + 1;
+		ord[N] = string[N] - 'a' + 1; 
 	
 	string[N] = 'z' + 1;
 	string[N + 1] = '\0';
 
 	int m = N;
 	
-	scanf("%s", string + m + 1); 
+	scanf("%s", string + m + 1); // 이렇게 받을 수 있다. (concat 없이)
 
 	for (N; string[N]; N++) {
 		suffixArr[N] = N,
