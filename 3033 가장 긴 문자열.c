@@ -13,7 +13,7 @@ void getSuffixArr() {
 
 	for (N = 0; string[N]; N++)
 		suffixArr[N] = N,
-		ord[N] = string[N] - 'a';
+		ord[N] = string[N] - 'a' + 1;
 	
 	ord[N] = 0; 
 	int t = 1, gcnt = 1;
